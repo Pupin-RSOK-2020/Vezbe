@@ -1,0 +1,19 @@
+body {
+  /* Slika */
+  background-image: url("Lotoback.png");
+
+  /* Minimalna širina pozadinske slike */
+  min-height: 500px;
+
+  /* Skrolovanje(scroll,fixed) */
+  background-attachment: fixed;
+
+  /* Centriranje pozadinske slike */
+  background-position: center;
+
+  /* Neponavljanje pozadinske slike */
+  background-repeat: no-repeat;
+
+  /* Skaliranje na najveću moguču veličinu */
+  background-size: cover;
+}
