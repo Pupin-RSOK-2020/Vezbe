@@ -56,6 +56,20 @@ class clskombinacija
         return $result;  
     } //metoda snimiKombinaciju
 
+    public function proveriIzlaznostKombinacije($broj1,$broj2,$broj3,$broj4,$broj5,$broj6,$broj7)
+    {
+        $uspeh=false;
+        $brredova=0;
+        $upit = "SELECT * FROM `izvucena kombinacija` WHERE broj1=$broj1 and broj2=$broj2 and broj3=$broj3 and broj4=$broj4 and broj5=$broj5 and broj6=$broj6 and broj7=$broj7;";	
+        $result = mysqli_query($this->konekcija, $upit);
+        $brredova = mysqli_num_rows($result);
+        if ($brredova>0)
+        {
+            $uspeh=true;
+        }
+        return $uspeh;
+    } //metoda proveriIzlaznostKombinacije
+
     function __destruct() 
     {
         /*$this->konekcija = null;*/
