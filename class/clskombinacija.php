@@ -70,6 +70,31 @@ class clskombinacija
         return $uspeh;
     } //metoda proveriIzlaznostKombinacije
 
+    public function generisiSlucajnuKombinaciju()
+    {
+        $niz[0]=rand(1,39);
+        $niz[1]=rand(1,39);
+        if ($niz[1]==$niz[0])
+                {$niz[1]=rand(1,39);}
+        $niz[2]=rand(1,39);
+        if ($niz[2]==$niz[0]||$niz[2]==$niz[1])
+                {$niz[2]=rand(1,39);} 
+        $niz[3]=rand(1,39);
+        if ($niz[3]==$niz[2]||$niz[3]==$niz[2]||$niz[3]==$niz[0])
+                {$niz[3]=rand(1,39);}   
+        $niz[4]=rand(1,39);
+        if ($niz[4]==$niz[3]||$niz[4]==$niz[2]||$niz[4]==$niz[2]||$niz[4]==$niz[0])
+                {$niz[4]=rand(1,39);}    
+        $niz[5]=rand(1,39);
+        if ($niz[5]==$niz[4]||$niz[5]==$niz[3]||$niz[5]==$niz[2]||$niz[5]==$niz[2]||$niz[5]==$niz[0])
+                {$niz[5]=rand(1,39);}    
+        $niz[6]=rand(1,39);
+        if ($niz[6]==$niz[5]||$niz[6]==$niz[4]||$niz[6]==$niz[3]||$niz[6]==$niz[2]||$niz[6]==$niz[2]||$niz[6]==$niz[0])
+                {$niz[6]=rand(1,39);}    
+        sort($niz);
+        return $niz;
+    } //metoda generisiSlucajnuKombinaciju
+
     function __destruct() 
     {
         /*$this->konekcija = null;*/
