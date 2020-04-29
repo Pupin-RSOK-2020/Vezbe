@@ -95,6 +95,26 @@ class clskombinacija
         return $niz;
     } //metoda generisiSlucajnuKombinaciju
 
+    public function pretragaIzvucenihKombinacija($godinaod,$kolood,$godinado,$kolodo)
+    {
+        $result = "";
+        $sqlupit = "SELECT * FROM `izvucena kombinacija`;";
+        if (($godinaod=="") && ($godinado=="") && ($kolood=="") && ($kolodo==""))
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija` ORDER BY Godina, Kolo;";}
+        if (($godinaod!="") && ($godinado!="") && ($kolood=="") && ($kolodo==""))
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina>=$godinaod AND Godina<=$godinado ORDER BY Godina, Kolo;";}
+        if (($godinaod!="") && ($godinado=="") && ($kolood=="") && ($kolodo==""))
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina>=$godinaod ORDER BY Godina, Kolo;";}
+        if (($godinaod=="") && ($godinado!="") && ($kolood=="") && ($kolodo==""))
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina<=$godinado ORDER BY Godina, Kolo;";}
+        if (($godinaod!="") && ($godinado!="") && ($kolood!="") && ($kolodo!=""))
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina>=$godinaod AND Godina<=$godinado AND Kolo>=$kolood AND Kolo<=$kolodo ORDER BY Godina, Kolo;";}
+        if (($godinaod=="") && ($godinado=="") && ($kolood!="") && ($kolodo!=""))
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Kolo>=$kolood AND Kolo<=$kolodo ORDER BY Godina, Kolo;";}
+        $result = mysqli_query($this->konekcija, $sqlupit);
+        return $result;  
+    } //metoda pretragaIzvucenihKombinacija
+
     function __destruct() 
     {
         /*$this->konekcija = null;*/
