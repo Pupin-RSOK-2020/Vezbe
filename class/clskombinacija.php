@@ -115,6 +115,30 @@ class clskombinacija
         return $result;  
     } //metoda pretragaIzvucenihKombinacija
 
+    public function obrisiKombinaciju($rbkomb)
+    {
+        $result = false;
+        $sqlupit ="DELETE FROM `izvucena kombinacija` WHERE RBkombinacija=$rbkomb;";
+        $result = mysqli_query($this->konekcija, $sqlupit);
+        return $result;  
+    } //metoda obrisiKombinaciju
+
+    public function promeniKombinaciju($rb)
+    {
+        $result = "";
+        $sqlupit ="UPDATE `izvucena kombinacija` SET Godina='$this->godina', Kolo='$this->kolo', Broj1='$this->broj1', Broj2=' $this->broj2', Broj3='$this->broj3', Broj4='$this->broj4', Broj5='$this->broj5', Broj6='$this->broj6', Broj7='$this->broj7' WHERE RBkombinacija='$rb';";
+        $result = mysqli_query($this->konekcija, $sqlupit);
+        return $result;  
+    } //metoda snimiKombinaciju
+
+    public function ucitajKombinaciju($rbkomb)
+    {
+        $result = "";
+        $sqlupit = "SELECT * FROM `izvucena kombinacija` WHERE RBkombinacija='$rbkomb';";
+        $result = mysqli_query($this->konekcija, $sqlupit);
+        return $result;  
+    } //metoda snimiKombinaciju
+
     function __destruct() 
     {
         /*$this->konekcija = null;*/
