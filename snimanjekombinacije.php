@@ -56,7 +56,7 @@
             {
               echo "Kombinacija je dobro uneta.";
               /*provera da li vec postoji to kolo i godina*/
-              $postojivec = false;
+              $postojivec = "";
               $postojivec = $objKombinacija->proveriDaLiKombinacijaPostoji($godina,$kolo);
               if ($postojivec)
               {
@@ -66,7 +66,7 @@
                 echo "Proverite unete podatke na prethodnoj stranici ili odustanite od unosa! ";
                 echo '<br/>';
               }
-              else /*postoji?*/
+              if (!$postojivec)
               {
               /*dodela vrednosti atributima objekta*/
               $objKombinacija->godina = $godina;
@@ -78,13 +78,24 @@
               $objKombinacija->broj5 = $broj5;
               $objKombinacija->broj6 = $broj6;
               $objKombinacija->broj7 = $broj7;
-              
+              $result="";
+              $resultstat="";
               /*snimanje objekta u bazu metodom snimiKombinaciju*/
+              /*snimanje statistickih parametara + citanje snimljenog rbkombinacije*/
               $result = $objKombinacija->snimiKombinaciju();
-              if ($result)
+              $rbres = "";
+              $rbres = $objKombinacija->odrediRB();
+              $redrb = 0;
+              $redrb = mysqli_fetch_array($rbres);
+              $rb = $redrb['novirb'];
+              require 'class/clsstatistika.php';
+              $objStatistika = new clsstatistika();
+              $resultstat = $objStatistika->snimiStatistiku($broj1,$broj2,$broj3,$broj4,$broj5,$broj6,$broj7,$rb);
+              if ($result && $resultstat)
+              //if ($result)
               {
                 echo '<br/><br/><b>';
-                echo "Kombinacija je uspešno sačuvana u bazi podataka!";
+                echo "Kombinacija sa statističkim parametrima je uspešno sačuvana u bazi podataka!";
                 echo '</b><br/>';
               }
               else

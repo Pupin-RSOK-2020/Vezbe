@@ -137,6 +137,31 @@
             }
           } //kraj php-a ako je pritisnuta pretraga
           ?>
+          <?php 
+          if(isset($_POST['pronadji'])) 
+          {
+          //ako je pritisnuta pretraga, tj. taster Stampanje
+            echo "<form action='izvestaj.php' method='POST'>
+              <div class='form-group row'>
+                <div class='col-sm-offset-2 col-sm-10'> 
+                    <input type='hidden' name='Godinaod' value='";
+                    echo $Godinaod;
+                    echo "'>
+                    <input type='hidden' name='Godinado' value='";
+                    echo $Godinado;
+                    echo "'>
+                    <input type='hidden' name='Kolood' value='";
+                    echo $Kolood;
+                    echo "'>
+                    <input type='hidden' name='Kolodo' value='";
+                    echo $Kolodo;
+                    echo "'>
+                    <button type='submit' class='btn btn-default'>Štmpanje izveštaja</button> 
+                  </div>  
+                </div>
+            </form></br>";
+          }
+          ?>
         </div> 
     </div> 
   </body> 
