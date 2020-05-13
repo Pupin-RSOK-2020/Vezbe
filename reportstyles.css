@@ -1,0 +1,28 @@
+table.table-style-two {
+		font-family: verdana, arial, sans-serif;
+		font-size: 14px;
+		color: #333333;
+		border-width: 1px;
+		border-color: #3A3A3A;
+		border-collapse: collapse;
+	}
+ 
+	table.table-style-two th {
+		border-width: 2px;
+		padding: 8px;
+		border-style: solid;
+		border-color: #545c61;
+		background-color: #8b8d8d;
+	}
+ 
+	table.table-style-two tr:hover td {
+		background-color: #DFEBF1;
+	}
+ 
+	table.table-style-two td {
+		border-width: 2px;
+		padding: 8px;
+		border-style: solid;
+		border-color: #888888;
+		background-color: #ffffff;
+	}
