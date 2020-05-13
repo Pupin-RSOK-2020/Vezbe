@@ -16,7 +16,7 @@ class clskombinacija
 
     function __construct() 
     {
-        include "clskonekcijadb.php";
+        include_once "clskonekcijadb.php";
         $objkonbp = new clskonekcijadb();
         $this->konekcija = $objkonbp->otvoriKonekciju();
     } //kraj konstruktora
@@ -39,6 +39,7 @@ class clskombinacija
         $uspeh=false;
         $brredova=0;
         $upit = "SELECT * FROM `izvucena kombinacija` WHERE godina=$godina and kolo=$kolo;";	
+        //echo $upit;
         $result = mysqli_query($this->konekcija, $upit);
         $brredova = mysqli_num_rows($result);
         if ($brredova>0)
@@ -52,6 +53,14 @@ class clskombinacija
     {
         $result = "";
         $sqlupit ="INSERT INTO `izvucena kombinacija` VALUES ('',$this->godina,$this->kolo,$this->broj1,$this->broj2,$this->broj3,$this->broj4,$this->broj5,$this->broj6,$this->broj7);";
+        $result = mysqli_query($this->konekcija, $sqlupit);
+        return $result;  
+    } //metoda snimiKombinaciju
+
+    public function odrediRB()
+    {
+        $result = "";
+        $sqlupit ="SELECT max(RBkombinacija) as novirb from `Izvucena kombinacija`;";
         $result = mysqli_query($this->konekcija, $sqlupit);
         return $result;  
     } //metoda snimiKombinaciju
@@ -98,20 +107,21 @@ class clskombinacija
     public function pretragaIzvucenihKombinacija($godinaod,$kolood,$godinado,$kolodo)
     {
         $result = "";
-        $sqlupit = "SELECT * FROM `izvucena kombinacija`;";
+        $sqlupit = "SELECT * FROM `izvucena kombinacija`, Statistika WHERE `izvucena kombinacija`.RBkombinacija=Statistika.RBkombinacija;";
         if (($godinaod=="") && ($godinado=="") && ($kolood=="") && ($kolodo==""))
-            {$sqlupit ="SELECT * FROM `izvucena kombinacija` ORDER BY Godina, Kolo;";}
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija`, Statistika WHERE `izvucena kombinacija`.RBkombinacija=Statistika.RBkombinacija ORDER BY Godina, Kolo;";}
         if (($godinaod!="") && ($godinado!="") && ($kolood=="") && ($kolodo==""))
-            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina>=$godinaod AND Godina<=$godinado ORDER BY Godina, Kolo;";}
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija`, Statistika WHERE `izvucena kombinacija`.RBkombinacija=Statistika.RBkombinacija AND Godina>=$godinaod AND Godina<=$godinado ORDER BY Godina, Kolo;";}
         if (($godinaod!="") && ($godinado=="") && ($kolood=="") && ($kolodo==""))
-            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina>=$godinaod ORDER BY Godina, Kolo;";}
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija`, Statistika WHERE `izvucena kombinacija`.RBkombinacija=Statistika.RBkombinacija AND Godina>=$godinaod ORDER BY Godina, Kolo;";}
         if (($godinaod=="") && ($godinado!="") && ($kolood=="") && ($kolodo==""))
-            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina<=$godinado ORDER BY Godina, Kolo;";}
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija`, Statistika WHERE `izvucena kombinacija`.RBkombinacija=Statistika.RBkombinacija AND Godina<=$godinado ORDER BY Godina, Kolo;";}
         if (($godinaod!="") && ($godinado!="") && ($kolood!="") && ($kolodo!=""))
-            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Godina>=$godinaod AND Godina<=$godinado AND Kolo>=$kolood AND Kolo<=$kolodo ORDER BY Godina, Kolo;";}
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija`, Statistika WHERE `izvucena kombinacija`.RBkombinacija=Statistika.RBkombinacija AND Godina>=$godinaod AND Godina<=$godinado AND Kolo>=$kolood AND Kolo<=$kolodo ORDER BY Godina, Kolo;";}
         if (($godinaod=="") && ($godinado=="") && ($kolood!="") && ($kolodo!=""))
-            {$sqlupit ="SELECT * FROM `izvucena kombinacija` WHERE Kolo>=$kolood AND Kolo<=$kolodo ORDER BY Godina, Kolo;";}
+            {$sqlupit ="SELECT * FROM `izvucena kombinacija`, Statistika WHERE `izvucena kombinacija`.RBkombinacija=Statistika.RBkombinacija AND Kolo>=$kolood AND Kolo<=$kolodo ORDER BY Godina, Kolo;";}
         $result = mysqli_query($this->konekcija, $sqlupit);
+        //echo $sqlupit;
         return $result;  
     } //metoda pretragaIzvucenihKombinacija
 
@@ -129,7 +139,7 @@ class clskombinacija
         $sqlupit ="UPDATE `izvucena kombinacija` SET Godina='$this->godina', Kolo='$this->kolo', Broj1='$this->broj1', Broj2=' $this->broj2', Broj3='$this->broj3', Broj4='$this->broj4', Broj5='$this->broj5', Broj6='$this->broj6', Broj7='$this->broj7' WHERE RBkombinacija='$rb';";
         $result = mysqli_query($this->konekcija, $sqlupit);
         return $result;  
-    } //metoda snimiKombinaciju
+    } //metoda promeniKombinaciju
 
     public function ucitajKombinaciju($rbkomb)
     {
@@ -137,7 +147,15 @@ class clskombinacija
         $sqlupit = "SELECT * FROM `izvucena kombinacija` WHERE RBkombinacija='$rbkomb';";
         $result = mysqli_query($this->konekcija, $sqlupit);
         return $result;  
-    } //metoda snimiKombinaciju
+    } //metoda ucitajKombinaciju
+
+    public function prebrojIzlaznostBroja($broj)
+    {
+        $result = "";
+        $sqlupit = "SELECT Count(*) as IzasaoPuta FROM `izvucena kombinacija` WHERE Broj1=$broj Or Broj2=$broj Or Broj3=$broj Or Broj4=$broj Or Broj5=$broj Or Broj6=$broj Or Broj7=$broj;";
+        $result = mysqli_query($this->konekcija, $sqlupit);
+        return $result;  
+    } //metoda prebrojIzlaznostBroja
 
     function __destruct() 
     {
